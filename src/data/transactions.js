@@ -1,0 +1,45 @@
+export const transactions = [
+  { id: 1, name: "Swiggy Food Order", category: "Food & Dining", amount: -856, date: "2025-07-12", icon: "🍔" },
+  { id: 2, name: "Salary Credit", category: "Income", amount: 150000, date: "2025-07-01", icon: "💰" },
+  { id: 3, name: "Amazon Shopping", category: "Shopping", amount: -4299, date: "2025-07-10", icon: "🛍️" },
+  { id: 4, name: "Netflix Subscription", category: "Entertainment", amount: -649, date: "2025-07-05", icon: "🎬" },
+  { id: 5, name: "Electricity Bill", category: "Utilities", amount: -2340, date: "2025-07-03", icon: "⚡" },
+  { id: 6, name: "Uber Ride", category: "Transport", amount: -385, date: "2025-07-11", icon: "🚗" },
+  { id: 7, name: "Gym Membership", category: "Health", amount: -2500, date: "2025-07-01", icon: "💪" },
+  { id: 8, name: "SIP - Axis Bluechip", category: "Investment", amount: -10000, date: "2025-07-05", icon: "📈" },
+  { id: 9, name: "Zomato Order", category: "Food & Dining", amount: -1230, date: "2025-07-09", icon: "🍕" },
+  { id: 10, name: "Mobile Recharge", category: "Utilities", amount: -599, date: "2025-07-02", icon: "📱" },
+  { id: 11, name: "Freelance Payment", category: "Income", amount: 25000, date: "2025-07-08", icon: "💰" },
+  { id: 12, name: "Myntra Purchase", category: "Shopping", amount: -3150, date: "2025-07-06", icon: "👔" },
+  { id: 13, name: "Petrol Fill-up", category: "Transport", amount: -2800, date: "2025-07-07", icon: "⛽" },
+  { id: 14, name: "Restaurant Dinner", category: "Food & Dining", amount: -2450, date: "2025-07-04", icon: "🍽️" },
+  { id: 15, name: "Insurance Premium", category: "Insurance", amount: -5000, date: "2025-07-01", icon: "🛡️" },
+  { id: 16, name: "Book Purchase", category: "Education", amount: -899, date: "2025-07-11", icon: "📚" },
+  { id: 17, name: "SIP - HDFC Mid Cap", category: "Investment", amount: -5000, date: "2025-07-10", icon: "📈" },
+  { id: 18, name: "Spotify Subscription", category: "Entertainment", amount: -119, date: "2025-07-01", icon: "🎵" },
+  { id: 19, name: "Medical Check-up", category: "Health", amount: -1500, date: "2025-07-08", icon: "🏥" },
+  { id: 20, name: "Grocery - BigBasket", category: "Groceries", amount: -3670, date: "2025-07-03", icon: "🛒" },
+];
+
+export const spendingByCategory = [
+  { category: "Food & Dining", amount: 18500, percentage: 22, color: "#fb923c", icon: "🍔", trend: "up", budget: 15000 },
+  { category: "Shopping", amount: 15200, percentage: 18, color: "#f87171", icon: "🛍️", trend: "up", budget: 12000 },
+  { category: "Investment", amount: 15000, percentage: 18, color: "#667eea", icon: "📈", trend: "stable", budget: 15000 },
+  { category: "Transport", amount: 8500, percentage: 10, color: "#22d3ee", icon: "🚗", trend: "down", budget: 10000 },
+  { category: "Utilities", amount: 7200, percentage: 9, color: "#fbbf24", icon: "⚡", trend: "stable", budget: 8000 },
+  { category: "Insurance", amount: 5000, percentage: 6, color: "#34d399", icon: "🛡️", trend: "stable", budget: 5000 },
+  { category: "Entertainment", amount: 4800, percentage: 6, color: "#a78bfa", icon: "🎬", trend: "up", budget: 3000 },
+  { category: "Health", amount: 4000, percentage: 5, color: "#ec4899", icon: "💪", trend: "stable", budget: 5000 },
+  { category: "Groceries", amount: 3670, percentage: 4, color: "#14b8a6", icon: "🛒", trend: "down", budget: 5000 },
+  { category: "Education", amount: 899, percentage: 1, color: "#8b5cf6", icon: "📚", trend: "stable", budget: 2000 },
+];
+
+export const monthlySpending = [
+  { month: "Jan", spending: 72000, income: 155000, savings: 83000 },
+  { month: "Feb", spending: 68000, income: 150000, savings: 82000 },
+  { month: "Mar", spending: 85000, income: 165000, savings: 80000 },
+  { month: "Apr", spending: 71000, income: 150000, savings: 79000 },
+  { month: "May", spending: 79000, income: 175000, savings: 96000 },
+  { month: "Jun", spending: 82000, income: 152000, savings: 70000 },
+  { month: "Jul", spending: 76000, income: 175000, savings: 99000 },
+];

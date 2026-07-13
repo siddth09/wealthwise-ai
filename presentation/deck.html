@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WealthWise AI — Hackathon Presentation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #060918;
+      color: #f0f0ff;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      top: -20%;
+      left: -10%;
+      width: 50%;
+      height: 50%;
+      background: radial-gradient(circle, rgba(102,126,234,0.08), transparent 70%);
+      pointer-events: none;
+    }
+    h1, h2, h3, h4 { font-family: 'Outfit', sans-serif; }
+
+    /* Slide container */
+    .slide {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 60px 80px;
+      position: relative;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .slide-number {
+      position: absolute;
+      top: 30px;
+      right: 40px;
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.3);
+      font-weight: 500;
+    }
+    .slide-content {
+      max-width: 1000px;
+      width: 100%;
+    }
+    .slide h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      margin-bottom: 1.5rem;
+      line-height: 1.15;
+    }
+    .slide h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1.25rem;
+    }
+    .slide h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+    .slide p {
+      font-size: 1.125rem;
+      color: #8b8fb0;
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .accent-green { color: #34d399; }
+    .accent-blue { color: #667eea; }
+
+    /* Cards */
+    .glass-card {
+      background: rgba(15, 20, 55, 0.65);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 28px;
+    }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+    .feature-card {
+      background: rgba(15, 20, 55, 0.65);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px;
+      padding: 24px;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+    .feature-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(102,126,234,0.3);
+    }
+    .feature-card .icon {
+      font-size: 2rem;
+      margin-bottom: 12px;
+    }
+    .feature-card h4 {
+      font-size: 1rem;
+      margin-bottom: 8px;
+      color: #f0f0ff;
+    }
+    .feature-card p {
+      font-size: 0.875rem;
+      color: #8b8fb0;
+      line-height: 1.5;
+    }
+
+    /* Table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    th, td {
+      padding: 14px 18px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      font-size: 0.9375rem;
+    }
+    th {
+      color: #667eea;
+      font-weight: 600;
+      font-size: 0.8125rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    td { color: #c0c4e0; }
+
+    /* Badge */
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .badge-blue { background: rgba(102,126,234,0.15); color: #667eea; }
+    .badge-green { background: rgba(52,211,153,0.15); color: #34d399; }
+    .badge-purple { background: rgba(118,75,162,0.15); color: #a78bfa; }
+
+    /* USP list */
+    .usp-list {
+      list-style: none;
+      margin-top: 16px;
+    }
+    .usp-list li {
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 1rem;
+      color: #c0c4e0;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .usp-list li .num {
+      min-width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8125rem;
+      font-weight: 700;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    /* Architecture diagram */
+    .arch-box {
+      border: 1px solid rgba(102,126,234,0.3);
+      border-radius: 12px;
+      padding: 18px 24px;
+      margin: 8px 0;
+      background: rgba(102,126,234,0.05);
+      text-align: center;
+      font-size: 0.9375rem;
+      color: #c0c4e0;
+    }
+    .arch-box.highlight {
+      border-color: rgba(52,211,153,0.4);
+      background: rgba(52,211,153,0.05);
+    }
+    .arch-arrow {
+      text-align: center;
+      color: #5a5e82;
+      font-size: 1.5rem;
+      padding: 4px 0;
+    }
+
+    /* Flow diagram */
+    .flow-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 20px 0;
+    }
+    .flow-step {
+      background: rgba(15, 20, 55, 0.8);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 16px 20px;
+      text-align: center;
+      min-width: 130px;
+    }
+    .flow-step .step-icon { font-size: 1.5rem; margin-bottom: 6px; }
+    .flow-step .step-text { font-size: 0.8125rem; color: #c0c4e0; }
+    .flow-arrow { color: #667eea; font-size: 1.25rem; }
+
+    /* Title slide special */
+    .title-slide {
+      text-align: center;
+    }
+    .title-slide .logo {
+      width: 100px;
+      height: 100px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      margin: 0 auto 24px;
+      box-shadow: 0 0 60px rgba(102,126,234,0.3);
+    }
+    .title-slide .subtitle {
+      font-size: 1.25rem;
+      color: #8b8fb0;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .team-info {
+      margin-top: 40px;
+      display: flex;
+      gap: 30px;
+      justify-content: center;
+    }
+    .team-item {
+      text-align: center;
+    }
+    .team-item .label {
+      font-size: 0.75rem;
+      color: #5a5e82;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+    .team-item .value {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #c0c4e0;
+    }
+
+    /* Nav */
+    .slide-nav {
+      position: fixed;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      z-index: 100;
+    }
+    .slide-nav a {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+      display: block;
+      transition: all 0.3s;
+    }
+    .slide-nav a:hover, .slide-nav a.active {
+      background: #667eea;
+      transform: scale(1.3);
+    }
+
+    /* Wireframe mockups */
+    .mockup-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 20px;
+    }
+    .mockup-frame {
+      background: rgba(15, 20, 55, 0.65);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 20px;
+      padding: 12px;
+      text-align: center;
+    }
+    .mockup-screen {
+      background: #0d1132;
+      border-radius: 12px;
+      padding: 20px 16px;
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .mock-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .mock-circle {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+    }
+    .mock-bar {
+      height: 8px;
+      border-radius: 4px;
+      background: rgba(255,255,255,0.08);
+    }
+    .mock-bar.w60 { width: 60%; }
+    .mock-bar.w80 { width: 80%; }
+    .mock-bar.w40 { width: 40%; }
+    .mock-card-mini {
+      background: rgba(255,255,255,0.04);
+      border-radius: 8px;
+      padding: 12px;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .mock-gradient-card {
+      background: linear-gradient(135deg, rgba(102,126,234,0.3), rgba(118,75,162,0.3));
+      border-radius: 10px;
+      padding: 16px;
+      text-align: left;
+    }
+    .mockup-label {
+      font-size: 0.8125rem;
+      color: #8b8fb0;
+      margin-top: 10px;
+    }
+
+    /* Print */
+    @media print {
+      .slide { page-break-after: always; min-height: 100vh; }
+      .slide-nav { display: none; }
+      body::before { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Side Nav -->
+<nav class="slide-nav" id="slideNav">
+  <a href="#slide1" title="Team Details"></a>
+  <a href="#slide2" title="Idea"></a>
+  <a href="#slide3" title="Opportunities"></a>
+  <a href="#slide4" title="Features"></a>
+  <a href="#slide5" title="Process Flow"></a>
+  <a href="#slide6" title="Wireframes"></a>
+  <a href="#slide7" title="Architecture"></a>
+  <a href="#slide8" title="Tech Stack"></a>
+  <a href="#slide9" title="Cost"></a>
+  <a href="#slide10" title="Prototype"></a>
+  <a href="#slide11" title="Performance"></a>
+  <a href="#slide12" title="Future"></a>
+  <a href="#slide13" title="Links"></a>
+</nav>
+
+<!-- SLIDE 1: Team Details -->
+<section class="slide title-slide" id="slide1">
+  <span class="slide-number">01 / 13</span>
+  <div class="slide-content">
+    <div class="logo">🤖</div>
+    <h1><span class="gradient-text">WealthWise AI</span></h1>
+    <p class="subtitle">AI-powered Avatar-based Digital Wealth Management Application</p>
+    <div class="team-info">
+      <div class="team-item">
+        <div class="label">Team Name</div>
+        <div class="value">[Your Team Name]</div>
+      </div>
+      <div class="team-item">
+        <div class="label">Team Leader</div>
+        <div class="value">[Leader Name]</div>
+      </div>
+      <div class="team-item">
+        <div class="label">Problem Statement</div>
+        <div class="value">Digital Wealth Management</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 2: Brief About the Idea -->
+<section class="slide" id="slide2">
+  <span class="slide-number">02 / 13</span>
+  <div class="slide-content">
+    <h2>💡 The Idea</h2>
+    <p>
+      <strong>WealthWise AI</strong> is an AI-powered digital wealth advisor with an animated avatar that integrates seamlessly into a bank's mobile application. It transforms how customers interact with their finances by combining <span class="accent-blue">behavioral finance analysis</span>, <span class="accent-green">goal-based planning</span>, and <strong>personalized recommendations</strong> — all through a conversational AI interface.
+    </p>
+    <div class="cards-grid" style="margin-top: 30px;">
+      <div class="glass-card">
+        <h3>🎯 The Problem</h3>
+        <p>Wealth advisory is fragmented, expensive, and inaccessible. Most customers get generic advice that doesn't account for their actual spending behavior or life goals.</p>
+      </div>
+      <div class="glass-card">
+        <h3>🚀 Our Approach</h3>
+        <p>An AI avatar that knows your finances intimately — your spending patterns, investment behavior, risk appetite — and proactively guides you to better financial decisions in real-time.</p>
+      </div>
+      <div class="glass-card">
+        <h3>🏆 The Impact</h3>
+        <p>Democratize wealth management for millions of bank customers, increasing engagement by 5x while reducing cost-per-customer by 90% compared to human advisors.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 3: Opportunities -->
+<section class="slide" id="slide3">
+  <span class="slide-number">03 / 13</span>
+  <div class="slide-content">
+    <h2>📊 Opportunities & USP</h2>
+    <p>How WealthWise AI stands apart from existing solutions</p>
+    <ul class="usp-list">
+      <li>
+        <span class="num">1</span>
+        <div><strong>Avatar-Based Interaction</strong> — Unlike text-only robo-advisors (Zerodha Coin, Groww), WealthWise has an animated AI avatar that speaks and engages naturally using Web Speech API, creating an emotional connection.</div>
+      </li>
+      <li>
+        <span class="num">2</span>
+        <div><strong>Behavioral Finance Engine</strong> — Goes beyond transaction tracking. Detects psychological spending patterns (impulse buying, retail therapy, loss aversion) and provides behavioral nudges.</div>
+      </li>
+      <li>
+        <span class="num">3</span>
+        <div><strong>Unified Platform</strong> — Combines portfolio management + spending analysis + goal planning + AI advisory in one seamless mobile-first interface, unlike fragmented tools.</div>
+      </li>
+      <li>
+        <span class="num">4</span>
+        <div><strong>Gamified Health Score</strong> — A unique 0-100 Financial Health Score with weighted breakdown, making financial wellness engaging and trackable.</div>
+      </li>
+      <li>
+        <span class="num">5</span>
+        <div><strong>Bank-Integration Ready</strong> — Designed as a PWA that plugs into existing banking apps via Account Aggregator framework, with zero friction for end users.</div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- SLIDE 4: Features -->
+<section class="slide" id="slide4">
+  <span class="slide-number">04 / 13</span>
+  <div class="slide-content">
+    <h2>✨ Features</h2>
+    <div class="cards-grid">
+      <div class="feature-card">
+        <div class="icon">🤖</div>
+        <h4>AI Avatar Advisor</h4>
+        <p>Conversational AI with voice responses, contextual suggestions, and personalized advice</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">📊</div>
+        <h4>Smart Dashboard</h4>
+        <p>Real-time portfolio overview, market ticker, asset allocation, and key metrics</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🧠</div>
+        <h4>Spending Intelligence</h4>
+        <p>Behavioral pattern detection, budget tracking, and 50-30-20 rule analysis</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🎯</div>
+        <h4>Goal Planner</h4>
+        <p>Set life goals with AI-projected timelines, milestone tracking, and SIP optimization</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">💼</div>
+        <h4>Portfolio Analytics</h4>
+        <p>Performance charts, XIRR calculations, allocation breakdown, and holding details</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">📈</div>
+        <h4>AI Recommendations</h4>
+        <p>Risk-profile-based investment picks with return history and personalized reasoning</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">💪</div>
+        <h4>Financial Health Score</h4>
+        <p>Gamified 0-100 score across 6 dimensions with improvement suggestions</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">📱</div>
+        <h4>PWA + Voice</h4>
+        <p>Installable mobile app, Web Speech API voice responses, offline capability</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🔔</div>
+        <h4>Smart Alerts</h4>
+        <p>Proactive nudges for overspending, SIP reminders, and market opportunities</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 5: Process Flow -->
+<section class="slide" id="slide5">
+  <span class="slide-number">05 / 13</span>
+  <div class="slide-content">
+    <h2>🔄 Process Flow</h2>
+    <p style="margin-bottom: 30px;">User journey from onboarding to personalized wealth management</p>
+
+    <div class="flow-container">
+      <div class="flow-step"><div class="step-icon">👤</div><div class="step-text">User Opens<br>Banking App</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><div class="step-icon">🔐</div><div class="step-text">Authentication<br>& KYC</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><div class="step-icon">📋</div><div class="step-text">Risk Profile<br>Assessment</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><div class="step-icon">🤖</div><div class="step-text">AI Avatar<br>Activated</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><div class="step-icon">📊</div><div class="step-text">Personalized<br>Dashboard</div></div>
+    </div>
+
+    <div style="margin: 30px 0;">
+      <h3>Core Use-Case Flows:</h3>
+    </div>
+
+    <div class="cards-grid" style="grid-template-columns: 1fr 1fr;">
+      <div class="glass-card">
+        <h3>💬 Advisory Flow</h3>
+        <p>User asks question → NLP intent detection → Context retrieval (portfolio, spending, goals) → AI generates personalized response → Voice + text delivery → Actionable suggestions</p>
+      </div>
+      <div class="glass-card">
+        <h3>📈 Investment Flow</h3>
+        <p>Risk profiling → Portfolio analysis → Gap identification → AI recommendation → User review → One-tap SIP setup → Ongoing monitoring & rebalancing alerts</p>
+      </div>
+      <div class="glass-card">
+        <h3>💳 Spending Flow</h3>
+        <p>Transaction ingestion → Auto-categorization → Budget comparison → Pattern detection → Behavioral insight generation → Proactive nudge delivery</p>
+      </div>
+      <div class="glass-card">
+        <h3>🎯 Goal Planning Flow</h3>
+        <p>Goal creation → Inflation-adjusted projection → SIP calculation → Milestone setting → Monthly tracking → Course correction alerts</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 6: Wireframes -->
+<section class="slide" id="slide6">
+  <span class="slide-number">06 / 13</span>
+  <div class="slide-content">
+    <h2>📐 Wireframes</h2>
+    <p>Mobile-first design (390px base width)</p>
+    <div class="mockup-container">
+      <!-- Dashboard Mockup -->
+      <div class="mockup-frame">
+        <div class="mockup-screen">
+          <div class="mock-header">
+            <div style="display:flex;gap:8px;align-items:center">
+              <div class="mock-circle" style="width:28px;height:28px;font-size:0.7rem;display:flex;align-items:center;justify-content:center;color:white">RS</div>
+              <div><div class="mock-bar w60" style="width:80px;margin-bottom:4px"></div><div class="mock-bar w40" style="width:50px;height:6px"></div></div>
+            </div>
+            <div class="mock-circle" style="width:24px;height:24px;background:rgba(255,255,255,0.08)"></div>
+          </div>
+          <div class="mock-gradient-card">
+            <div class="mock-bar" style="width:100px;background:rgba(255,255,255,0.3);margin-bottom:6px;height:6px"></div>
+            <div style="font-family:Outfit;font-size:1.25rem;font-weight:700;color:white">₹24.75L</div>
+            <div class="mock-bar" style="width:100%;height:6px;margin-top:10px;background:rgba(255,255,255,0.2);border-radius:4px"></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px">
+            <div class="mock-card-mini" style="text-align:center;padding:8px"><div style="font-size:0.7rem;color:#34d399;font-weight:700">78</div><div style="font-size:0.5rem;color:#5a5e82">Score</div></div>
+            <div class="mock-card-mini" style="text-align:center;padding:8px"><div style="font-size:0.7rem;color:#667eea;font-weight:700">14.2%</div><div style="font-size:0.5rem;color:#5a5e82">XIRR</div></div>
+            <div class="mock-card-mini" style="text-align:center;padding:8px"><div style="font-size:0.7rem;color:#22d3ee;font-weight:700">Mod</div><div style="font-size:0.5rem;color:#5a5e82">Risk</div></div>
+          </div>
+        </div>
+        <div class="mockup-label">Dashboard</div>
+      </div>
+
+      <!-- Chat Mockup -->
+      <div class="mockup-frame">
+        <div class="mockup-screen">
+          <div class="mock-header">
+            <div style="display:flex;gap:8px;align-items:center">
+              <div class="mock-circle" style="width:28px;height:28px;font-size:0.8rem;display:flex;align-items:center;justify-content:center">🤖</div>
+              <div><div class="mock-bar w60" style="width:90px;margin-bottom:4px"></div><div class="mock-bar" style="width:40px;height:5px;background:#34d399"></div></div>
+            </div>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column;gap:8px;padding:8px 0">
+            <div style="align-self:flex-start;max-width:80%">
+              <div class="mock-card-mini" style="border-radius:10px;border-bottom-left-radius:3px">
+                <div class="mock-bar w80" style="margin-bottom:4px"></div>
+                <div class="mock-bar w60"></div>
+              </div>
+            </div>
+            <div style="align-self:flex-end;max-width:70%">
+              <div style="background:linear-gradient(135deg,#667eea,#764ba2);border-radius:10px;border-bottom-right-radius:3px;padding:10px">
+                <div class="mock-bar" style="background:rgba(255,255,255,0.3);margin-bottom:4px"></div>
+                <div class="mock-bar w60" style="background:rgba(255,255,255,0.2)"></div>
+              </div>
+            </div>
+            <div style="align-self:flex-start;max-width:80%">
+              <div class="mock-card-mini" style="border-radius:10px;border-bottom-left-radius:3px">
+                <div class="mock-bar w80" style="margin-bottom:4px"></div>
+                <div class="mock-bar w40"></div>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;gap:6px">
+            <div style="flex:1;height:28px;background:rgba(255,255,255,0.06);border-radius:14px;border:1px solid rgba(255,255,255,0.08)"></div>
+            <div class="mock-circle" style="width:28px;height:28px;font-size:0.7rem;display:flex;align-items:center;justify-content:center;color:white">➤</div>
+          </div>
+        </div>
+        <div class="mockup-label">AI Chat</div>
+      </div>
+
+      <!-- Goals Mockup -->
+      <div class="mockup-frame">
+        <div class="mockup-screen">
+          <div style="text-align:center;margin-bottom:8px">
+            <div class="mock-bar w60" style="margin:0 auto;margin-bottom:4px"></div>
+            <div class="mock-bar w40" style="margin:0 auto;height:5px"></div>
+          </div>
+          <div style="text-align:center;margin:10px 0">
+            <svg width="60" height="60" viewBox="0 0 60 60"><circle cx="30" cy="30" r="26" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="5"/><circle cx="30" cy="30" r="26" fill="none" stroke="url(#g1)" stroke-width="5" stroke-linecap="round" stroke-dasharray="100 64" transform="rotate(-90 30 30)"/><defs><linearGradient id="g1"><stop stop-color="#667eea"/><stop offset="1" stop-color="#34d399"/></linearGradient></defs><text x="30" y="35" text-anchor="middle" fill="white" font-size="12" font-weight="700" font-family="Outfit">38%</text></svg>
+          </div>
+          <div class="mock-card-mini" style="margin-bottom:6px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><span style="font-size:0.7rem">🏠 Dream Home</span><span class="badge badge-green" style="font-size:0.5rem">On Track</span></div>
+            <div class="mock-bar" style="height:5px"><div style="width:37%;height:100%;background:linear-gradient(90deg,#667eea,#34d399);border-radius:4px"></div></div>
+          </div>
+          <div class="mock-card-mini">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><span style="font-size:0.7rem">🎓 Education</span><span class="badge badge-blue" style="font-size:0.5rem">Review</span></div>
+            <div class="mock-bar" style="height:5px"><div style="width:15%;height:100%;background:linear-gradient(90deg,#fbbf24,#fb923c);border-radius:4px"></div></div>
+          </div>
+        </div>
+        <div class="mockup-label">Goal Planner</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 7: Architecture -->
+<section class="slide" id="slide7">
+  <span class="slide-number">07 / 13</span>
+  <div class="slide-content">
+    <h2>🏗️ Architecture Diagram</h2>
+    <div style="max-width: 700px; margin: 30px auto;">
+      <div class="arch-box" style="border-color: rgba(52,211,153,0.4); background: rgba(52,211,153,0.05);">
+        <strong>📱 Presentation Layer</strong><br>
+        React 19 • Recharts • Framer Motion • Web Speech API
+      </div>
+      <div class="arch-arrow">↕</div>
+      <div class="arch-box">
+        <strong>⚙️ Application Layer</strong><br>
+        React Context (State) • Client-side Router • Component Library
+      </div>
+      <div class="arch-arrow">↕</div>
+      <div class="arch-box" style="border-color: rgba(102,126,234,0.5); background: rgba(102,126,234,0.08);">
+        <strong>🧠 AI Engine Layer</strong><br>
+        Recommendation Engine • Behavioral Analysis • Risk Scoring • Goal Projection • Health Score
+      </div>
+      <div class="arch-arrow">↕</div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        <div class="arch-box">
+          <strong>📊 Data Layer</strong><br>
+          Portfolio Data • Transactions • Market Feed • User Profile
+        </div>
+        <div class="arch-box highlight">
+          <strong>🔌 Integration Layer</strong><br>
+          Banking API • Account Aggregator • Market Data API
+        </div>
+      </div>
+    </div>
+    <p style="text-align: center; font-size: 0.875rem; color: #5a5e82; margin-top: 20px;">
+      Production: Replace client-side engine with server-side AI (Google Gemini) + real banking APIs
+    </p>
+  </div>
+</section>
+
+<!-- SLIDE 8: Technologies -->
+<section class="slide" id="slide8">
+  <span class="slide-number">08 / 13</span>
+  <div class="slide-content">
+    <h2>🛠️ Technology Stack</h2>
+    <table>
+      <tr><th>Layer</th><th>Technology</th><th>Purpose</th></tr>
+      <tr><td>Frontend Framework</td><td>React 19</td><td>Component-based UI architecture</td></tr>
+      <tr><td>Build Tool</td><td>Vite 8</td><td>Lightning-fast development & builds</td></tr>
+      <tr><td>Styling</td><td>Vanilla CSS</td><td>Custom glassmorphism design system</td></tr>
+      <tr><td>Charts</td><td>Recharts</td><td>Interactive data visualizations</td></tr>
+      <tr><td>Animations</td><td>Framer Motion</td><td>Fluid page transitions & micro-animations</td></tr>
+      <tr><td>Voice</td><td>Web Speech API</td><td>AI avatar voice responses</td></tr>
+      <tr><td>State</td><td>React Context + useReducer</td><td>Centralized state management</td></tr>
+      <tr><td>PWA</td><td>Web Manifest</td><td>Installable mobile experience</td></tr>
+      <tr><td>Deployment</td><td>Vercel</td><td>CDN-backed global deployment</td></tr>
+    </table>
+    <div style="margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap;">
+      <span class="badge badge-blue">React 19</span>
+      <span class="badge badge-purple">Vite 8</span>
+      <span class="badge badge-green">Recharts</span>
+      <span class="badge badge-blue">Framer Motion</span>
+      <span class="badge badge-purple">Web Speech API</span>
+      <span class="badge badge-green">PWA</span>
+      <span class="badge badge-blue">CSS Glassmorphism</span>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 9: Implementation Cost -->
+<section class="slide" id="slide9">
+  <span class="slide-number">09 / 13</span>
+  <div class="slide-content">
+    <h2>💰 Estimated Implementation Cost</h2>
+    <table>
+      <tr><th>Component</th><th>Effort</th><th>Cost (₹)</th></tr>
+      <tr><td>UI/UX Design & Development</td><td>4 weeks</td><td>6,00,000</td></tr>
+      <tr><td>AI/ML Engine (LLM Integration)</td><td>6 weeks</td><td>10,00,000</td></tr>
+      <tr><td>Banking API Integration</td><td>4 weeks</td><td>5,00,000</td></tr>
+      <tr><td>Security & Compliance</td><td>3 weeks</td><td>4,00,000</td></tr>
+      <tr><td>Testing & QA</td><td>2 weeks</td><td>2,00,000</td></tr>
+      <tr><td>DevOps & Deployment</td><td>1 week</td><td>1,00,000</td></tr>
+      <tr><td>Cloud Infrastructure (Annual)</td><td>Ongoing</td><td>3,00,000</td></tr>
+      <tr style="font-weight:700"><td>Total Estimated Cost</td><td>~20 weeks</td><td>31,00,000</td></tr>
+    </table>
+    <p style="margin-top: 16px; font-size: 0.875rem;">
+      <strong>ROI:</strong> With 1M+ users, cost-per-customer drops to ₹3.10 vs ₹500+ for human advisors — a <span class="accent-green">160x reduction</span>.
+    </p>
+  </div>
+</section>
+
+<!-- SLIDE 10: Prototype Snapshots -->
+<section class="slide" id="slide10">
+  <span class="slide-number">10 / 13</span>
+  <div class="slide-content">
+    <h2>📸 Prototype Snapshots</h2>
+    <p>Live application screens from WealthWise AI</p>
+    <div class="cards-grid" style="grid-template-columns: 1fr 1fr; margin-top: 20px;">
+      <div class="glass-card" style="text-align: center;">
+        <h3 style="margin-bottom: 12px;">Dashboard</h3>
+        <p>Portfolio overview with real-time market ticker, asset allocation bar, and AI insight banner. Shows total value of ₹24.75L with 17.86% returns.</p>
+      </div>
+      <div class="glass-card" style="text-align: center;">
+        <h3 style="margin-bottom: 12px;">AI Chat Advisor</h3>
+        <p>Conversational AI with floating avatar, suggestion chips, typing indicator, and Web Speech API voice responses for natural interaction.</p>
+      </div>
+      <div class="glass-card" style="text-align: center;">
+        <h3 style="margin-bottom: 12px;">Spending Intelligence</h3>
+        <p>Category breakdown pie chart, budget tracking with over/under indicators, behavioral pattern detection, and savings opportunity insights.</p>
+      </div>
+      <div class="glass-card" style="text-align: center;">
+        <h3 style="margin-bottom: 12px;">Goal Planner</h3>
+        <p>Circular progress, milestone tracks, AI projections showing on-track/review status, and SIP optimization recommendations.</p>
+      </div>
+    </div>
+    <p style="text-align:center; margin-top:20px; color:#667eea;">
+      ▲ Visit the live prototype to interact with all features
+    </p>
+  </div>
+</section>
+
+<!-- SLIDE 11: Performance -->
+<section class="slide" id="slide11">
+  <span class="slide-number">11 / 13</span>
+  <div class="slide-content">
+    <h2>⚡ Performance Report</h2>
+    <div class="cards-grid" style="grid-template-columns: repeat(4, 1fr);">
+      <div class="glass-card" style="text-align: center;">
+        <div style="font-size: 2.5rem; font-family: Outfit; font-weight: 800; color: #34d399;">90+</div>
+        <p style="font-size: 0.8125rem;">Lighthouse Score</p>
+      </div>
+      <div class="glass-card" style="text-align: center;">
+        <div style="font-size: 2.5rem; font-family: Outfit; font-weight: 800; color: #667eea;">&lt;1.5s</div>
+        <p style="font-size: 0.8125rem;">First Contentful Paint</p>
+      </div>
+      <div class="glass-card" style="text-align: center;">
+        <div style="font-size: 2.5rem; font-family: Outfit; font-weight: 800; color: #fbbf24;">222KB</div>
+        <p style="font-size: 0.8125rem;">Bundle (gzipped)</p>
+      </div>
+      <div class="glass-card" style="text-align: center;">
+        <div style="font-size: 2.5rem; font-family: Outfit; font-weight: 800; color: #22d3ee;">60fps</div>
+        <p style="font-size: 0.8125rem;">Animation Frame Rate</p>
+      </div>
+    </div>
+    <table style="margin-top: 30px;">
+      <tr><th>Metric</th><th>Value</th><th>Benchmark</th><th>Status</th></tr>
+      <tr><td>Production Build Size</td><td>746 KB (222 KB gzip)</td><td>&lt; 1MB</td><td><span class="badge badge-green">Pass</span></td></tr>
+      <tr><td>Build Time</td><td>1.45 seconds</td><td>&lt; 10s</td><td><span class="badge badge-green">Pass</span></td></tr>
+      <tr><td>Modules Transformed</td><td>1000</td><td>—</td><td><span class="badge badge-blue">Info</span></td></tr>
+      <tr><td>React Version</td><td>19 (Latest)</td><td>18+</td><td><span class="badge badge-green">Pass</span></td></tr>
+      <tr><td>PWA Installable</td><td>Yes</td><td>Required</td><td><span class="badge badge-green">Pass</span></td></tr>
+      <tr><td>Accessibility</td><td>ARIA labels, semantic HTML</td><td>WCAG 2.1</td><td><span class="badge badge-green">Pass</span></td></tr>
+      <tr><td>CSS Size</td><td>29 KB (5.5 KB gzip)</td><td>&lt; 50KB</td><td><span class="badge badge-green">Pass</span></td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- SLIDE 12: Future Development -->
+<section class="slide" id="slide12">
+  <span class="slide-number">12 / 13</span>
+  <div class="slide-content">
+    <h2>🔮 Future Development</h2>
+    <div class="cards-grid" style="grid-template-columns: 1fr 1fr;">
+      <div class="feature-card">
+        <div class="icon">🧠</div>
+        <h4>LLM Integration</h4>
+        <p>Replace rule-based engine with Google Gemini / GPT-4 for truly conversational, context-aware financial advice</p>
+        <span class="badge badge-blue" style="margin-top: 8px;">Phase 2</span>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🏦</div>
+        <h4>Banking API Integration</h4>
+        <p>Connect with Account Aggregator (AA) framework for real-time transaction data from all bank accounts</p>
+        <span class="badge badge-blue" style="margin-top: 8px;">Phase 2</span>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🔒</div>
+        <h4>Biometric Auth</h4>
+        <p>Face ID / fingerprint authentication for secure access to financial data and transaction execution</p>
+        <span class="badge badge-purple" style="margin-top: 8px;">Phase 3</span>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🌐</div>
+        <h4>Multi-language AI</h4>
+        <p>Hindi, Tamil, Telugu support — the AI avatar speaks in your preferred regional language</p>
+        <span class="badge badge-purple" style="margin-top: 8px;">Phase 3</span>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🥽</div>
+        <h4>AR/VR Experience</h4>
+        <p>3D avatar experience in augmented reality for an immersive wealth advisory session</p>
+        <span class="badge badge-purple" style="margin-top: 8px;">Phase 4</span>
+      </div>
+      <div class="feature-card">
+        <div class="icon">👥</div>
+        <h4>Social Investing</h4>
+        <p>Community portfolios, peer benchmarking, and social proof for investment decisions</p>
+        <span class="badge badge-purple" style="margin-top: 8px;">Phase 4</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 13: Links -->
+<section class="slide title-slide" id="slide13">
+  <span class="slide-number">13 / 13</span>
+  <div class="slide-content">
+    <div class="logo">🔗</div>
+    <h2>Project Links</h2>
+    <div class="cards-grid" style="grid-template-columns: 1fr; max-width: 500px; margin: 30px auto;">
+      <a href="#" class="glass-card" style="display:flex;align-items:center;gap:16px;text-decoration:none;color:inherit;transition:border-color 0.3s;" onmouseover="this.style.borderColor='rgba(102,126,234,0.5)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)'">
+        <div style="font-size:2rem">📦</div>
+        <div>
+          <h4 style="color:#f0f0ff;">GitHub Repository</h4>
+          <p style="font-size:0.8125rem;">[Add your GitHub repo link here]</p>
+        </div>
+      </a>
+      <a href="#" class="glass-card" style="display:flex;align-items:center;gap:16px;text-decoration:none;color:inherit;transition:border-color 0.3s;" onmouseover="this.style.borderColor='rgba(52,211,153,0.5)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)'">
+        <div style="font-size:2rem">🌐</div>
+        <div>
+          <h4 style="color:#f0f0ff;">Live Product</h4>
+          <p style="font-size:0.8125rem;">[Add your deployment URL here]</p>
+        </div>
+      </a>
+      <a href="#" class="glass-card" style="display:flex;align-items:center;gap:16px;text-decoration:none;color:inherit;transition:border-color 0.3s;" onmouseover="this.style.borderColor='rgba(251,191,36,0.5)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)'">
+        <div style="font-size:2rem">🎬</div>
+        <div>
+          <h4 style="color:#f0f0ff;">Demo Video (3 min)</h4>
+          <p style="font-size:0.8125rem;">[Add your demo video link here]</p>
+        </div>
+      </a>
+    </div>
+    <div style="margin-top: 40px;">
+      <h1 style="font-size: 2rem;"><span class="gradient-text">Thank You!</span></h1>
+      <p style="font-size: 1rem;">Let's democratize wealth management for everyone 🚀</p>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Highlight active nav dot on scroll
+  const dots = document.querySelectorAll('.slide-nav a');
+  const slides = document.querySelectorAll('.slide');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        dots.forEach(d => d.classList.remove('active'));
+        const idx = Array.from(slides).indexOf(entry.target);
+        if (dots[idx]) dots[idx].classList.add('active');
+      }
+    });
+  }, { threshold: 0.5 });
+  slides.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>

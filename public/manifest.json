@@ -1,0 +1,17 @@
+{
+  "name": "WealthWise AI",
+  "short_name": "WealthWise",
+  "description": "AI-powered Digital Wealth Management with Avatar-based personalized advisory",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#060918",
+  "theme_color": "#060918",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
